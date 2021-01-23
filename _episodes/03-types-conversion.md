@@ -37,7 +37,7 @@ keypoints:
 ~~~
 print(type(52))
 ~~~
-{: .python}
+{: .language-python}
 ~~~
 <class 'int'>
 ~~~
@@ -47,7 +47,7 @@ print(type(52))
 fitness = 'average'
 print(type(fitness))
 ~~~
-{: .python}
+{: .language-python}
 ~~~
 <class 'str'>
 ~~~
@@ -60,7 +60,7 @@ print(type(fitness))
 ~~~
 print(5 - 3)
 ~~~
-{: .python}
+{: .language-python}
 ~~~
 2
 ~~~
@@ -69,7 +69,7 @@ print(5 - 3)
 ~~~
 print('hello' - 'h')
 ~~~
-{: .python}
+{: .language-python}
 ~~~
 ---------------------------------------------------------------------------
 TypeError                                 Traceback (most recent call last)
@@ -88,7 +88,7 @@ TypeError: unsupported operand type(s) for -: 'str' and 'str'
 full_name = 'Ahmed' + ' ' + 'Walsh'
 print(full_name)
 ~~~
-{: .python}
+{: .language-python}
 ~~~
 Ahmed Walsh
 ~~~
@@ -101,7 +101,7 @@ Ahmed Walsh
 separator = '=' * 10
 print(separator)
 ~~~
-{: .python}
+{: .language-python}
 ~~~
 ==========
 ~~~
@@ -114,7 +114,7 @@ print(separator)
 ~~~
 print(len(full_name))
 ~~~
-{: .python}
+{: .language-python}
 ~~~
 11
 ~~~
@@ -125,7 +125,7 @@ print(len(full_name))
 ~~~
 print(len(52))
 ~~~
-{: .python}
+{: .language-python}
 ~~~
 ---------------------------------------------------------------------------
 TypeError                                 Traceback (most recent call last)
@@ -136,14 +136,14 @@ TypeError: object of type 'int' has no len()
 ~~~
 {: .error}
 
-## Must convert numbers to strings or vice versa when operating on them.
+## <a name='convert-numbers-and-strings'></a> Must convert numbers to strings or vice versa when operating on them.
 
 *   Cannot add numbers and strings.
 
 ~~~
 print(1 + '2')
 ~~~
-{: .python}
+{: .language-python}
 ~~~
 ---------------------------------------------------------------------------
 TypeError                                 Traceback (most recent call last)
@@ -161,7 +161,7 @@ TypeError: unsupported operand type(s) for +: 'int' and 'str'
 print(1 + int('2'))
 print(str(1) + '2')
 ~~~
-{: .python}
+{: .language-python}
 ~~~
 3
 12
@@ -177,7 +177,7 @@ print(str(1) + '2')
 print('half is', 1 / 2.0)
 print('three squared is', 3.0 ** 2)
 ~~~
-{: .python}
+{: .language-python}
 ~~~
 half is 0.5
 three squared is 9.0
@@ -197,7 +197,7 @@ second = 5 * first
 first = 2
 print('first is', first, 'and second is', second)
 ~~~
-{: .python}
+{: .language-python}
 ~~~
 first is 2 and second is 5
 ~~~
@@ -219,7 +219,7 @@ first is 2 and second is 5
 > > ~~~
 > > print(type(3.4))
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > > ~~~
 > > <class 'float'>
 > > ~~~
@@ -240,7 +240,7 @@ first is 2 and second is 5
 > > result = 3.25 + 4
 > > print(result, 'is', type(result))
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > > ~~~
 > > 7.25 is <class 'float'>
 > > ~~~
@@ -267,9 +267,8 @@ first is 2 and second is 5
 > > 2. Floating point, since fractional days are required
 > > 3. Character string if serial number contains letters and numbers, otherwise integer if the serial number consists only of numerals
 > > 4. This will vary! How do you define a specimen's age? whole days since collection (integer)? date and time (string)?
-> > 5. Choose floating point to represent population as large aggreates (eg millions), or integer to represent population in units of individuals.
+> > 5. Choose floating point to represent population as large aggregates (eg millions), or integer to represent population in units of individuals.
 > > 6. Floating point number, since an average is likely to have a fractional part.
-> >
 > > {: .output}
 > {: .solution}
 {: .challenge}
@@ -284,7 +283,7 @@ first is 2 and second is 5
 > print('5 / 3:', 5/3)
 > print('5 % 3:', 5%3)
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > ~~~
 > 5 // 3: 1
@@ -311,16 +310,18 @@ first is 2 and second is 5
 >
 > > ## Solution
 > > We want the minimum number of surveys that reaches everyone once, which is
-> > the rounded up value of `num_subjects / num_per_survey`. This is 
-> > equivalent to performing an integer division with `//` and adding 1.
+> > the rounded up value of `num_subjects/ num_per_survey`. This is 
+> > equivalent to performing a floor division with `//` and adding 1. Before
+> > the division we need to subtract 1 from the number of subjects to deal with 
+> > the case where `num_subjects` is evenly divisible by `num_per_survey`.
 > > ~~~
 > > num_subjects = 600
 > > num_per_survey = 42
-> > num_surveys = num_subjects // num_per_survey + 1
+> > num_surveys = (num_subjects - 1) // num_per_survey + 1
 > >
 > > print(num_subjects, 'subjects,', num_per_survey, 'per survey:', num_surveys)
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > > ~~~
 > > 600 subjects, 42 per survey: 15
 > > ~~~
@@ -337,7 +338,7 @@ first is 2 and second is 5
 > print("string to float:", float("3.4"))
 > print("float to int:", int(3.4))
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > ~~~
 > string to float: 3.4
@@ -350,7 +351,7 @@ first is 2 and second is 5
 > ~~~
 > print("string to float:", float("Hello world!"))
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > ~~~
 > ---------------------------------------------------------------------------
@@ -371,7 +372,7 @@ first is 2 and second is 5
 > ~~~
 > print("fractional string to int:", int("3.4"))
 > ~~~
-> {: .python}
+> {: .language-python}
 > 
 > > ## Solution
 > > What do you expect this program to do? It would not be so unreasonable to expect the Python 3 `int` command to
@@ -385,7 +386,7 @@ first is 2 and second is 5
 > > int("3.4")
 > > int(float("3.4"))
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > > ~~~
 > > In [2]: int("3.4")
 > > ---------------------------------------------------------------------------
@@ -401,7 +402,7 @@ first is 2 and second is 5
 
 > ## Arithmetic with Different Types
 >
-> Which of the following will print 2.0?
+> Which of the following will return the floating point number `2.0`?
 > Note: there may be more than one right answer.
 >
 > ~~~
@@ -409,7 +410,7 @@ first is 2 and second is 5
 > second = "1"
 > third = "1.1"
 > ~~~
-> {: .python}
+> {: .language-python}
 >
 > 1. `first + float(second)`
 > 2. `float(second) + float(third)`
@@ -428,21 +429,35 @@ first is 2 and second is 5
 >
 > Python provides complex numbers,
 > which are written as `1.0+2.0j`.
-> If `val` is an imaginary number,
+> If `val` is a complex number,
 > its real and imaginary parts can be accessed using *dot notation*
 > as `val.real` and `val.imag`.
 >
+> ~~~
+> complex = 6 + 2j
+> print(complex.real)
+> print(complex.imag)
+> ~~~
+> {: .language-python}
+>
+> ~~~
+> 6.0
+> 2.0
+> ~~~
+> {: .output}
+>
+>
 > 1.  Why do you think Python uses `j` instead of `i` for the imaginary part?
 > 2.  What do you expect `1+2j + 3` to produce?
-> 3.  What do you expect '4j' to be?  What about `4 j` or `4 + j'? > 
+> 3.  What do you expect `4j` to be?  What about `4 j` or `4 + j`?
 > 
 > > ## Solution
 > >
 > > 1. Standard mathematics treatments typically use `i` to denote an imaginary number. However, from media reports it
 > > was an early convention established from electrical engineering that now presents a technically expensive area to
 > > change. [Stack Overflow provides additional explanation and
-> > discussion](http://stackoverflow.com/questions/24812444/why-are-complex-numbers-in-python-denoted-with-j-instead-of-i)
-> > 2. _4+2j_
-> > 3. _4j, syntax error, depends on the value of j_
+> > discussion.](http://stackoverflow.com/questions/24812444/why-are-complex-numbers-in-python-denoted-with-j-instead-of-i)
+> > 2. `(4+2j)`
+> > 3. `4j`, `Syntax Error: invalid syntax`, in this case _j_ is considered a variable and this depends on if _j_ is defined and if so, its assigned value
 > {: .solution}
 {: .challenge}

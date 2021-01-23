@@ -16,16 +16,16 @@ keypoints:
 
 ## Use a `for` loop to process files given a list of their names.
 
-*   A filename is just a character string.
+*   A filename is a character string.
 *   And lists can contain character strings.
 
 ~~~
-import pandas
+import pandas as pd
 for filename in ['data/gapminder_gdp_africa.csv', 'data/gapminder_gdp_asia.csv']:
-    data = pandas.read_csv(filename, index_col='country')
+    data = pd.read_csv(filename, index_col='country')
     print(filename, data.min())
 ~~~
-{: .python}
+{: .language-python}
 ~~~
 data/gapminder_gdp_africa.csv gdpPercap_1952    298.846212
 gdpPercap_1957    335.997115
@@ -48,14 +48,14 @@ dtype: float64
 ~~~
 {: .output}
 
-## Use `glob.glob` to find sets of files whose names match a pattern.
+## Use [`glob.glob`](https://docs.python.org/3/library/glob.html#glob.glob) to find sets of files whose names match a pattern.
 
 *   In Unix, the term "globbing" means "matching a set of files with a pattern".
 *   The most common patterns are:
     *   `*` meaning "match zero or more characters"
     *   `?` meaning "match exactly one character"
-*   Python contains the `glob` library to provide pattern matching functionality
-*   The `glob` library contains a function also called `glob` to match file patterns
+*   Python's standard library contains the [`glob`](https://docs.python.org/3/library/glob.html) module to provide pattern matching functionality
+*   The [`glob`](https://docs.python.org/3/library/glob.html) module contains a function also called `glob` to match file patterns
 *   E.g., `glob.glob('*.txt')` matches all files in the current directory 
     whose names end with `.txt`.
 *   Result is a (possibly empty) list of character strings.
@@ -64,7 +64,7 @@ dtype: float64
 import glob
 print('all csv files in data directory:', glob.glob('data/*.csv'))
 ~~~
-{: .python}
+{: .language-python}
 ~~~
 all csv files in data directory: ['data/gapminder_all.csv', 'data/gapminder_gdp_africa.csv', \
 'data/gapminder_gdp_americas.csv', 'data/gapminder_gdp_asia.csv', 'data/gapminder_gdp_europe.csv', \
@@ -75,7 +75,7 @@ all csv files in data directory: ['data/gapminder_all.csv', 'data/gapminder_gdp_
 ~~~
 print('all PDB files:', glob.glob('*.pdb'))
 ~~~
-{: .python}
+{: .language-python}
 ~~~
 all PDB files: []
 ~~~
@@ -88,10 +88,10 @@ all PDB files: []
 
 ~~~
 for filename in glob.glob('data/gapminder_*.csv'):
-    data = pandas.read_csv(filename)
+    data = pd.read_csv(filename)
     print(filename, data['gdpPercap_1952'].min())
 ~~~
-{: .python}
+{: .language-python}
 ~~~
 data/gapminder_all.csv 298.8462121
 data/gapminder_gdp_africa.csv 298.8462121
@@ -129,28 +129,28 @@ data/gapminder_gdp_oceania.csv 10039.59564
 >
 > ~~~
 > import glob
-> import pandas
+> import pandas as pd
 > fewest = ____
 > for filename in glob.glob('data/*.csv'):
->     dataframe = pandas.____(filename)
+>     dataframe = pd.____(filename)
 >     fewest = min(____, dataframe.shape[0])
 > print('smallest file has', fewest, 'records')
 > ~~~
-> {: .python}
-> Notice that the shape method returns a tuple with 
-> the number of rows and columns of the data frame.
+> {: .language-python}
+> Note that the [shape method](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.shape.html)
+> returns a tuple with the number of rows and columns of the data frame.
 >
 > > ## Solution
 > > ~~~
 > > import glob
-> > import pandas
+> > import pandas as pd
 > > fewest = float('Inf')
 > > for filename in glob.glob('data/*.csv'):
-> >     dataframe = pandas.read_csv(filename)
+> >     dataframe = pd.read_csv(filename)
 > >     fewest = min(fewest, dataframe.shape[0])
 > > print('smallest file has', fewest, 'records')
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > {: .solution}
 {: .challenge}
 
@@ -160,19 +160,26 @@ data/gapminder_gdp_oceania.csv 10039.59564
 > and plots the average GDP per capita for each region over time
 > in a single chart.
 > > ## Solution
+> > This solution builds a useful legend by using the string [`split`](https://docs.python.org/3/library/stdtypes.html#str.split) method to
+> > extract the `region` from the path 'data/gapminder_gdp_a_specific_region.csv'. The [`pathlib module`]
+> > also provides useful abstractions for file and path manipulation like returning the name of a file 
+> > without the file extension.
 > > ~~~
 > > import glob
-> > import pandas 
+> > import pandas as pd
 > > import matplotlib.pyplot as plt
 > > fig, ax = plt.subplots(1,1)
 > > for filename in glob.glob('data/gapminder_gdp*.csv'):
-> >     dataframe = pandas.read_csv(filename)
-> >     # extract region from the filename, expected to be in the format 'data/gapminder_gdp_<region>.csv'
-> >     region = filename.rpartition('_')[2][:-4] 
+> >     dataframe = pd.read_csv(filename)
+> >     # extract <region> from the filename, expected to be in the format 'data/gapminder_gdp_<region>.csv'.
+> >     # we will split the string using the split method and `_` as our separator,
+> >     # retrieve the last string in the list that split returns (`<region>.csv`), 
+> >     # and then remove the `.csv` extension from that string.
+> >     region = filename.split('_')[-1][:-4] 
 > >     dataframe.mean().plot(ax=ax, label=region)
 > > plt.legend()
 > > plt.show()
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > {: .solution}
 {: .challenge}

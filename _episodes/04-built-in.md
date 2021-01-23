@@ -31,7 +31,7 @@ keypoints:
 # This sentence isn't executed by Python.
 adjustment = 0.5   # Neither is this - anything after '#' is ignored.
 ~~~
-{: .python}
+{: .language-python}
 
 ## A function may take zero or more arguments.
 
@@ -49,11 +49,29 @@ print('before')
 print()
 print('after')
 ~~~
-{: .python}
+{: .language-python}
 ~~~
 before
 
 after
+~~~
+{: .output}
+
+## Every function returns something.
+
+*   Every function call produces some result.
+*   If the function doesn't have a useful result to return,
+    it usually returns the special value `None`. `None` is a Python
+    object that stands in anytime there is no value.
+
+~~~
+result = print('example')
+print('result of print is', result)
+~~~
+{: .language-python}
+~~~
+example
+result of print is None
 ~~~
 {: .output}
 
@@ -68,7 +86,7 @@ after
 print(max(1, 2, 3))
 print(min('a', 'A', '0'))
 ~~~
-{: .python}
+{: .language-python}
 ~~~
 3
 0
@@ -84,9 +102,13 @@ print(min('a', 'A', '0'))
 ~~~
 print(max(1, 'a'))
 ~~~
-{: .python}
+{: .language-python}
 ~~~
-TypeError: unorderable types: str() > int()
+TypeError                                 Traceback (most recent call last)
+<ipython-input-52-3f049acf3762> in <module>
+----> 1 print(max(1, 'a'))
+
+TypeError: '>' not supported between instances of 'str' and 'int'
 ~~~
 {: .error}
 
@@ -98,7 +120,7 @@ TypeError: unorderable types: str() > int()
 ~~~
 round(3.712)
 ~~~
-{: .python}
+{: .language-python}
 ~~~
 4
 ~~~
@@ -109,7 +131,7 @@ round(3.712)
 ~~~
 round(3.712, 1)
 ~~~
-{: .python}
+{: .language-python}
 ~~~
 3.7
 ~~~
@@ -122,18 +144,26 @@ round(3.712, 1)
 ~~~
 help(round)
 ~~~
-{: .python}
+{: .language-python}
 ~~~
 Help on built-in function round in module builtins:
 
-round(...)
-    round(number[, ndigits]) -> number
-
-    Round a number to a given precision in decimal digits (default 0 digits).
-    This returns an int when called with one argument, otherwise the
-    same type as the number. ndigits may be negative.
+round(number, ndigits=None)
+    Round a number to a given precision in decimal digits.
+    
+    The return value is an integer if ndigits is omitted or None.  Otherwise
+    the return value has the same type as the number.  ndigits may be negative.
 ~~~
 {: .output}
+
+## The Jupyter Notebook has two ways to get help.
+
+*   Option 1: Place the cursor near where the function is invoked in a cell
+    (i.e., the function name or its parameters),
+    * Hold down `shift`, and press `tab`.
+    * Do this several times to expand the information returned.
+*   Option 2: Type the function name in a cell with a question mark after it. Then run the cell.
+
 
 ## Python reports a syntax error when it can't understand the source of a program.
 
@@ -143,8 +173,11 @@ round(...)
 # Forgot to close the quote marks around the string.
 name = 'Feng
 ~~~
-{: .python}
+{: .language-python}
 ~~~
+  File "<ipython-input-56-f42768451d55>", line 2
+    name = 'Feng
+                ^
 SyntaxError: EOL while scanning string literal
 ~~~
 {: .error}
@@ -153,8 +186,11 @@ SyntaxError: EOL while scanning string literal
 # An extra '=' in the assignment.
 age = = 52
 ~~~
-{: .python}
+{: .language-python}
 ~~~
+  File "<ipython-input-57-ccc3df3cf902>", line 2
+    age = = 52
+          ^
 SyntaxError: invalid syntax
 ~~~
 {: .error}
@@ -164,7 +200,7 @@ SyntaxError: invalid syntax
 ~~~
 print("hello world"
 ~~~
-{: .python}
+{: .language-python}
 ~~~
   File "<ipython-input-6-d1cc229bf815>", line 1
     print ("hello world"
@@ -182,43 +218,24 @@ SyntaxError: unexpected EOF while parsing
 *   Next is the problematic line of code,
     indicating the problem with a `^` pointer.
 
-## Python reports a runtime error when something goes wrong while a program is executing.
+## <a name='runtime-error'></a> Python reports a runtime error when something goes wrong while a program is executing.
 
 ~~~
 age = 53
 remaining = 100 - aege # mis-spelled 'age'
 ~~~
-{: .python}
+{: .language-python}
 ~~~
+NameError                                 Traceback (most recent call last)
+<ipython-input-59-1214fb6c55fc> in <module>
+      1 age = 53
+----> 2 remaining = 100 - aege # mis-spelled 'age'
+
 NameError: name 'aege' is not defined
 ~~~
 {: .error}
 
 *   Fix syntax errors by reading the source and runtime errors by tracing execution.
-
-## The Jupyter Notebook has two ways to get help.
-
-*   Place the cursor inside the parenthesis of the function,
-    hold down `shift`,
-    and press `tab`.
-*   Or type a function name with a question mark after it.
-
-## Every function returns something.
-
-*   Every function call produces some result.
-*   If the function doesn't have a useful result to return,
-    it usually returns the special value `None`.
-
-~~~
-result = print('example')
-print('result of print is', result)
-~~~
-{: .python}
-~~~
-example
-result of print is None
-~~~
-{: .output}
 
 > ## What Happens When
 >
@@ -231,12 +248,12 @@ result of print is None
 > radiance = 1.0
 > radiance = max(2.1, 2.0 + min(radiance, 1.1 * radiance - 0.5))
 > ~~~
-> {: .python}
+> {: .language-python}
 > > ## Solution
 > > 1.
 > >    1. `1.1 * radiance = 1.1`
 > >    2. `1.1 - 0.5 = 0.6`
-> >    3. `min(randiance, 0.6) = 0.6`
+> >    3. `min(radiance, 0.6) = 0.6`
 > >    4. `2.0 + 0.6 = 2.6`
 > >    5. `max(2.1, 2.6) = 2.6`
 > > 2. At the end, `radiance = 2.6`
@@ -257,13 +274,12 @@ result of print is None
 > print(max(rich, poor))
 > print(max(len(rich), len(poor)))
 > ~~~
-> {: .python}
+> {: .language-python}
 > > ## Solution
-> > 1. 
 > > ~~~
 > > print(max(easy_string))
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > > ~~~
 > > c
 > > ~~~
@@ -271,7 +287,7 @@ result of print is None
 > > ~~~
 > > print(max(rich, poor))
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > > ~~~
 > > tin
 > > ~~~
@@ -279,14 +295,21 @@ result of print is None
 > > ~~~
 > > print(max(len(rich), len(poor)))
 > > ~~~
-> > {: .python}
+> > {: .language-python}
 > > ~~~
 > > 4
 > > ~~~
 > > {: .output}
+> > `max(len(rich), poor)` throws a TypeError. This turns into `max(4, 'tin')` and 
+> > as we discussed earlier a string and integer cannot meaningfully be compared.
+> > ~~~
+> > TypeError                                 Traceback (most recent call last)
+> > <ipython-input-65-bc82ad05177a> in <module>
+> > ----> 1 max(len(rich), poor)
 > > 
-> > 2. It throws a TypeError. The command is trying to run `max(4, 'tin')` and you can't compare
-> >    a string and an integer
+> > TypeError: '>' not supported between instances of 'str' and 'int'
+> > ~~~
+> > {: .error }
 > {: .solution}
 {: .challenge}
 

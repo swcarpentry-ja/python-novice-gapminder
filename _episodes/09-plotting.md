@@ -38,7 +38,25 @@ plt.ylabel('Position (km)')
 ~~~
 {: .language-python}
 
-![Simple Position-Time Plot](../fig/9_simple_position_time_plot.png)
+![Simple Position-Time Plot](../fig/9_simple_position_time_plot.svg)
+
+> ## Display All Open Figures
+> 
+> In our Jupyter Notebook example with `%matplotlib inline`, running the cell generates the figure directly below the code. 
+> The figure is also included in the Notebook document for future viewing.
+> However, other Python environments require an additional command in order to display the figure.
+>
+> Instruct `matplotlib` to show a figure:
+> ~~~
+> plt.show()
+> ~~~
+> {: .language-python}
+>
+> This command can also be used within a Notebook - for instance, to display multiple figures
+> if several are created by a single cell.
+>
+{: .callout}
+
 ## Plot data directly from a [`Pandas dataframe`](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html).
 
 *   We can also plot [Pandas dataframes](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html).
@@ -46,20 +64,27 @@ plt.ylabel('Position (km)')
 *   Before plotting, we convert the column headings from a `string` to `integer` data type, since they represent numerical values
 
 ~~~
-import pandas
+import pandas as pd
 
-data = pandas.read_csv('data/gapminder_gdp_oceania.csv', index_col='country')
+data = pd.read_csv('data/gapminder_gdp_oceania.csv', index_col='country')
 
 # Extract year from last 4 characters of each column name
+# The current column names are structured as 'gdpPercap_(year)', 
+# so we want to keep the (year) part only for clarity when plotting GDP vs. years
+# To do this we use strip(), which removes from the string the characters stated in the argument
+# This method works on strings, so we call str before strip()
+
 years = data.columns.str.strip('gdpPercap_')
+
 # Convert year values to integers, saving results back to dataframe
+
 data.columns = years.astype(int)
 
 data.loc['Australia'].plot()
 ~~~
 {: .language-python}
 
-![GDP plot for Australia](../fig/9_gdp_australia.png)
+![GDP plot for Australia](../fig/9_gdp_australia.svg)
 ## Select and transform data, then plot it.
 
 *   By default, [`DataFrame.plot`](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.plot.html#pandas.DataFrame.plot) plots with the rows as the X axis.
@@ -71,7 +96,7 @@ plt.ylabel('GDP per capita')
 ~~~
 {: .language-python}
 
-![GDP plot for Australia and New Zealand](../fig/9_gdp_australia_nz.png)
+![GDP plot for Australia and New Zealand](../fig/9_gdp_australia_nz.svg)
 ## Many styles of plot are available.
 
 *   For example, do a bar plot using a fancier style.
@@ -83,11 +108,11 @@ plt.ylabel('GDP per capita')
 ~~~
 {: .language-python}
 
-![GDP barplot for Australia](../fig/9_gdp_bar.png)
+![GDP barplot for Australia](../fig/9_gdp_bar.svg)
 
 ## Data can also be plotted by calling the `matplotlib` `plot` function directly.
 *   The command is `plt.plot(x, y)`
-*   The color / format of markers can also be specified as an optical argument: e.g. 'b-' is a blue line, 'g--' is a green dashed line.
+*   The color and format of markers can also be specified as an additional optional argument e.g., `b-` is a blue line, `g--` is a green dashed line.
 
 ## Get Australia data from dataframe
 
@@ -99,7 +124,7 @@ plt.plot(years, gdp_australia, 'g--')
 ~~~
 {: .language-python}
 
-![GDP formatted plot for Australia](../fig/9_gdp_australia_formatted.png)
+![GDP formatted plot for Australia](../fig/9_gdp_australia_formatted.svg)
 
 ## Can plot many sets of data together.
 
@@ -119,7 +144,36 @@ plt.ylabel('GDP per capita ($)')
 ~~~
 {: .language-python}
 
-![GDP formatted plot for Australia and New Zealand](../fig/9_gdp_australia_nz_formatted.png)
+> ## Adding a Legend
+> 
+> Often when plotting multiple datasets on the same figure it is desirable to have 
+> a legend describing the data.
+>
+> This can be done in `matplotlib` in two stages:
+> 
+> * Provide a label for each dataset in the figure:
+>
+> ~~~
+> plt.plot(years, gdp_australia, label='Australia')
+> plt.plot(years, gdp_nz, label='New Zealand')
+> ~~~
+> {: .language-python}
+>
+> * Instruct `matplotlib` to create the legend.
+>
+> ~~~
+> plt.legend()
+> ~~~
+> {: .language-python}
+>
+> By default matplotlib will attempt to place the legend in a suitable position. If you
+> would rather specify a position this can be done with the `loc=` argument, e.g to place
+> the legend in the upper left corner of the plot, specify `loc='upper left'`
+>
+{: .callout}
+
+
+![GDP formatted plot for Australia and New Zealand](../fig/9_gdp_australia_nz_formatted.svg)
 *   Plot a scatter plot correlating the GDP of Australia and New Zealand
 *   Use either `plt.scatter` or `DataFrame.plot.scatter`
 
@@ -128,13 +182,14 @@ plt.scatter(gdp_australia, gdp_nz)
 ~~~
 {: .language-python}
 
-![GDP correlation using plt.scatter](../fig/9_gdp_correlation_plt.png)
+![GDP correlation using plt.scatter](../fig/9_gdp_correlation_plt.svg)
 ~~~
 data.T.plot.scatter(x = 'Australia', y = 'New Zealand')
 ~~~
 {: .language-python}
 
-![GDP correlation using data.T.plot.scatter](../fig/9_gdp_correlation_data.png)
+![GDP correlation using data.T.plot.scatter](../fig/9_gdp_correlation_data.svg)
+
 > ## Minima and Maxima
 >
 > Fill in the blanks below to plot the minimum GDP per capita over time
@@ -142,7 +197,7 @@ data.T.plot.scatter(x = 'Australia', y = 'New Zealand')
 > Modify it again to plot the maximum GDP per capita over time for Europe.
 >
 > ~~~
-> data_europe = pandas.read_csv('data/gapminder_gdp_europe.csv', index_col='country')
+> data_europe = pd.read_csv('data/gapminder_gdp_europe.csv', index_col='country')
 > data_europe.____.plot(label='min')
 > data_europe.____
 > plt.legend(loc='best')
@@ -153,7 +208,7 @@ data.T.plot.scatter(x = 'Australia', y = 'New Zealand')
 > > ## Solution
 > >
 > > ~~~
-> > data_europe = pandas.read_csv('data/gapminder_gdp_europe.csv', index_col='country')
+> > data_europe = pd.read_csv('data/gapminder_gdp_europe.csv', index_col='country')
 > > data_europe.min().plot(label='min')
 > > data_europe.max().plot(label='max')
 > > plt.legend(loc='best')
@@ -172,25 +227,24 @@ data.T.plot.scatter(x = 'Australia', y = 'New Zealand')
 > What relationship do you see (if any)?
 >
 > ~~~
-> data_asia = pandas.read_csv('data/gapminder_gdp_asia.csv', index_col='country')
+> data_asia = pd.read_csv('data/gapminder_gdp_asia.csv', index_col='country')
 > data_asia.describe().T.plot(kind='scatter', x='min', y='max')
 > ~~~
 > {: .language-python}
 >
 > > ## Solution
 > >
-> > ![Correlations Solution 1](../fig/9_correlations_solution1.png)
+> > ![Correlations Solution 1](../fig/9_correlations_solution1.svg)
 > >
 > > No particular correlations can be seen between the minimum and maximum gdp values
 > > year on year. It seems the fortunes of asian countries do not rise and fall together.
-> >
 > {: .solution}
 >
 > You might note that the variability in the maximum is much higher than
 > that of the minimum.  Take a look at the maximum and the max indexes:
 >
 > ~~~
-> data_asia = pandas.read_csv('data/gapminder_gdp_asia.csv', index_col='country')
+> data_asia = pd.read_csv('data/gapminder_gdp_asia.csv', index_col='country')
 > data_asia.max().plot()
 > print(data_asia.idxmax())
 > print(data_asia.idxmin())
@@ -204,7 +258,6 @@ data.T.plot.scatter(x = 'Australia', y = 'New Zealand')
 > > maybe the Brent crude index would make an interesting comparison?
 > > Whilst Myanmar consistently has the lowest gdp, the highest gdb nation has varied
 > > more notably.
-> >
 > {: .solution}
 {: .challenge}
 
@@ -215,7 +268,7 @@ data.T.plot.scatter(x = 'Australia', y = 'New Zealand')
 > normalizing marker size by population:
 >
 > ~~~
-> data_all = pandas.read_csv('data/gapminder_all.csv', index_col='country')
+> data_all = pd.read_csv('data/gapminder_all.csv', index_col='country')
 > data_all.plot(kind='scatter', x='gdpPercap_2007', y='lifeExp_2007',
 >               s=data_all['pop_2007']/1e6)
 > ~~~
@@ -225,7 +278,7 @@ data.T.plot.scatter(x = 'Australia', y = 'New Zealand')
 > explain what each argument to `plot` does.
 >
 > > ## Solution
-> > ![More Correlations Solution](../fig/9_more_correlations_solution.png)
+> > ![More Correlations Solution](../fig/9_more_correlations_solution.svg)
 > >
 > > A good place to look is the documentation for the plot function -
 > > help(data_all.plot).
@@ -238,7 +291,6 @@ data.T.plot.scatter(x = 'Australia', y = 'New Zealand')
 > > s - Details for this can be found in the documentation of plt.scatter.
 > > A single number or one value for each data point. Determines the size
 > > of the plotted points.
-> >
 > {: .solution}
 {: .challenge}
 
@@ -269,7 +321,7 @@ data.T.plot.scatter(x = 'Australia', y = 'New Zealand')
 > One possibility to save the figure to file is then to
 >
 > * save a reference to the current figure in a local variable (with `plt.gcf`) 
-> * call the `savefig` class method from that varible.
+> * call the `savefig` class method from that variable.
 >
 > ~~~
 > fig = plt.gcf() # get current figure
@@ -279,4 +331,10 @@ data.T.plot.scatter(x = 'Australia', y = 'New Zealand')
 > {: .language-python}
 {: .callout}
 
-
+> ## Making your plots accessible
+>
+> Whenever you are generating plots to go into a paper or a presentation, there are a few things you can do to make sure that everyone can understand your plots.
+> * Always make sure your text is large enough to read. Use the `fontsize` parameter in `xlabel`, `ylabel`, `title`, and `legend`, and [`tick_params` with `labelsize`](https://matplotlib.org/2.1.1/api/_as_gen/matplotlib.pyplot.tick_params.html) to increase the text size of the numbers on your axes.
+> * Similarly, you should make your graph elements easy to see. Use `s` to increase the size of your scatterplot markers and `linewidth` to increase the sizes of your plot lines.
+> * Using color (and nothing else) to distinguish between different plot elements will make your plots unreadable to anyone who is colorblind, or who happens to have a black-and-white office printer. For lines, the `linestyle` parameter lets you use different types of lines. For scatterplots, `marker` lets you change the shape of your points. If you're unsure about your colors, you can use [Coblis](https://www.color-blindness.com/coblis-color-blindness-simulator/) or [Color Oracle](https://colororacle.org/) to simulate what your plots would look like to those with colorblindness.
+{: .callout}
