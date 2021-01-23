@@ -1,3 +1,4 @@
+remote_theme: "carpentries-i18n/carp-theme"
 #------------------------------------------------------------
 # Values for this lesson.
 #------------------------------------------------------------
@@ -12,9 +13,6 @@ carpentry: "swc"
 # Overall title for pages.
 title: "Plotting and Programming in Python"
 
-# Life cycle stage of the lesson
-# possible values: "pre-alpha", "alpha", "beta", "stable"
-life_cycle: "stable"
 
 #------------------------------------------------------------
 # Generic settings (should not need to change).
@@ -39,7 +37,7 @@ carpentries_site: "https://carpentries.org/"
 dc_site: "http://datacarpentry.org"
 example_repo: "https://github.com/carpentries/lesson-example"
 example_site: "https://carpentries.github.io/lesson-example"
-lc_site: "https://librarycarpentry.org/"
+lc_site: "https://librarycarpentry.github.io/"
 swc_github: "https://github.com/swcarpentry"
 swc_pages: "https://swcarpentry.github.io"
 swc_site: "https://software-carpentry.org"
@@ -49,18 +47,12 @@ workshop_repo: "https://github.com/carpentries/workshop-template"
 workshop_site: "https://carpentries.github.io/workshop-template"
 
 # Surveys.
-swc_pre_survey: "https://www.surveymonkey.com/r/swc_pre_workshop_v1?workshop_id="
-swc_post_survey: "https://www.surveymonkey.com/r/swc_post_workshop_v1?workshop_id="
+pre_survey: "https://www.surveymonkey.com/r/swc_pre_workshop_v1?workshop_id="
+post_survey: "https://www.surveymonkey.com/r/swc_post_workshop_v1?workshop_id="
 training_post_survey: "https://www.surveymonkey.com/r/post-instructor-training"
-dc_pre_survey: "https://www.surveymonkey.com/r/dcpreworkshopassessment?workshop_id="
-dc_post_survey: "https://www.surveymonkey.com/r/dcpostworkshopassessment?workshop_id="
-lc_pre_survey: "https://www.surveymonkey.com/r/lcpreworkshopsurvey?workshop_id="
-lc_post_survey: "https://www.surveymonkey.com/r/lcpostworkshopsurvey?workshop_id="
-instructor_pre_survey: "https://www.surveymonkey.com/r/instructor_training_pre_survey?workshop_id="
-instructor_post_survey: "https://www.surveymonkey.com/r/instructor_training_post_survey?workshop_id="
 
 # Start time in minutes (0 to be clock-independent, 540 to show a start at 09:00 am).
-start_time: 540
+start_time: 0
 
 # Specify that things in the episodes collection should be output.
 collections:
@@ -68,6 +60,9 @@ collections:
     output: true
     permalink: /:path/index.html
   extras:
+    output: true
+    permalink: /:path/index.html
+  locale:
     output: true
     permalink: /:path/index.html
 
@@ -88,6 +83,12 @@ defaults:
     values:
       root: ..
       layout: page
+  - scope:
+      path: ""
+      type: locale
+    values:
+      root: ..
+      layout: episode
 
 # Files and directories that are not to be copied.
 exclude:
